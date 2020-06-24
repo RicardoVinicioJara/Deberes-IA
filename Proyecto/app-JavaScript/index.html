@@ -1,0 +1,63 @@
+<head>
+    <style> body {
+        margin: 0;
+    } </style>
+
+    <script src="https://unpkg.com/3d-force-graph@1.64.0/dist/3d-force-graph.min.js"></script>
+    <script src="https://unpkg.com/neo4j-driver"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/neo4j-driver"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+
+<div style="position: relative;">
+    <div id="3d-graph" style="position: absolute; left: 0px; top: 0px;"> CUADRO 1</div>
+    <div style="position: absolute; left: 80px; top: 90px;">
+        <div class="card bg-success">
+            <h5 class="card-header">Neo4j  | JS</h5>
+            <div class="card-body">
+                <h5 class="card-title">Ricardo Jara | Fanny Gutama</h5>
+                <div class="d-flex flex-row">
+                    <a href="color.html"><div class="p-2">Nodo a Color 3D</div></a>
+                    <a href="particles.html"><div class="p-2">Louvain</div></a>
+                    <a href="weights.html"><div class="p-2">Longitud</div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "1004"));
+    const session = driver.session();
+    const start = new Date()
+    session
+        .run('MATCH (n)-->(m) RETURN id(n) as source, id(m) as target LIMIT $limit', {limit: 5000})
+        .then(function (result) {
+            const links = result.records.map(r => {
+                return {source: r.get('source').toNumber(), target: r.get('target').toNumber()}
+            });
+            session.close();
+            console.log(links.length + " links loaded in " + (new Date() - start) + " ms.")
+            const ids = new Set()
+            links.forEach(l => {
+                ids.add(l.source);
+                ids.add(l.target);
+            });
+            const gData = {
+                nodes: Array.from(ids).map(id => {
+                    return {id: id}
+                }), links: links
+            }
+            const Graph = ForceGraph3D()(document.getElementById('3d-graph')).graphData(gData);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+</script>
+</body>

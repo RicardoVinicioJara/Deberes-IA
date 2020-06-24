@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IA - SE</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/toast.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
+</head>
+<body>
+<div id="graph" style="position: absolute;">
+</div>
+<div style="position: absolute; left: 80px; top: 90px; width: 90%">
+    <div role="navigation" class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <form action="/">
+                        <button type="submit" class="btn btn-primary mb-2">Inicio</button>
+                    </form>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">A*</h5>
+                        </div>
+
+                        <form class="form-inline" , action="/A" , method="post">
+                            <label class="sr-only" for="inlineFormInputGroupUsername2">Username</label>
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Orgen</div>
+                                </div>
+                                <input type="text" value="Ecuador" class="form-control" disabled>
+                            </div>
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Destino</div>
+                                </div>
+                                <input type="text" id="dest" name="dest" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Ver Camino</button>
+                        </form>
+                        <div class="card-body">
+                            <h5 class="card-title">Costo</h5>
+                        </div>
+                        <form class="form-inline" , action="/Costo" , method="post">
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Origen</div>
+                                </div>
+                                <input type="text" id="or1" name="or1" class="form-control">
+                            </div>
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Destino</div>
+                                </div>
+                                <input type="text" id="de1" name="de1" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Ver Camino</button>
+                        </form>
+                        <div class="card-body">
+                            <h5 class="card-title">Amplitud</h5>
+                        </div>
+                        <form class="form-inline" , action="/Amplitud" , method="post">
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Origen</div>
+                                </div>
+                                <input type="text" id="or2" name="or2" class="form-control">
+                            </div>
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Numero de Nodos</div>
+                                </div>
+                                <input type="text" id="num" name="num" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Ver Camino</button>
+                        </form>
+                        <div class="card-body">
+                            <h5 class="card-title">Profundidad</h5>
+                        </div>
+                        <form class="form-inline" , action="/Profundidad" , method="post">
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Origen</div>
+                                </div>
+                                <input type="text" id="or3" name="or3" class="form-control">
+                            </div>
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Destino</div>
+                                </div>
+                                <input type="text" id="de3" name="de3" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Ver Camino</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Tabla Resultado</h5>
+                            <div class="span3" style="height: 800px !important;
+                                    overflow: scroll;">
+                                <table class="table table-striped table-dark table-sm">
+                                    <thead>
+                                    <tr>
+                                        <th width="100px">Costo</th>
+                                        <th width="100px">Nombre</th>
+                                        <th width="200px">longitud</th>
+                                        <th width="200px">Latitud</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for i in range(0, lista.__len__()) %}
+                                    <tr>
+                                        <td>{{ lista[i].costo }}</td>
+                                        <td>{{ lista[i].name}}</td>
+                                        <td>{{ lista[i].longitude}}</td>
+                                        <td>{{ lista[i].latitude}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/jquery-1.11.2.js') }}"></script
+
+<script src="{{ url_for('static', filename='js/jquery-ui.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/myjs.js') }}"></script>
+</body>
+<!--===============================================================================================-->
+
+</html>
